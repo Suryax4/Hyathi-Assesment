@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-function App() {
+import Navbar from "./components/Navbar";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import PrivateComponent from "./components/PrivateComponent";
+import PokemonList from "./components/AddPokemon";
+import AddPokemon from "./components/AddPokemon";
+import FeedPokemon from "./components/FeedPokemon";
+
+import { Routes, Route } from "react-router-dom";
+import Footer from "./components/Footer";
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar />
+      <Routes>
+        <Route element={<PrivateComponent />}>
+          <Route path="/" element={<PokemonList />}></Route>
+          <Route path="/add" element={<AddPokemon />}></Route>
+          <Route path="/update/:id" element={<FeedPokemon />}></Route>
+          <Route path="/logout" element={<h1>Logout Component</h1>}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
+        </Route>
+
+        <Route path="/login" element={<Login />}></Route>
+      </Routes>
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;
