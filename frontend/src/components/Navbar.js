@@ -21,12 +21,10 @@ const Navbar = () => {
           <li>
             <Link to="/"> Adopted Pokemon </Link>
           </li>
+
           <li>
-            <Link to="/add"> Add Pokemon </Link>
-          </li>
-          {/* <li>
             <Link to="/update"> Feed Pokemon </Link>
-          </li> */}
+          </li>
 
           <li>
             <Link onClick={logout} to="/signup">

@@ -13,7 +13,7 @@ const Login = () => {
   });
 
   const loginHandler = async () => {
-    let result = await fetch("http://localhost:8000/api/v1/login", {
+    let result = await fetch("http://localhost:5008/api/v1/login", {
       method: "post",
       body: JSON.stringify({ email, password }),
       headers: {
@@ -33,6 +33,7 @@ const Login = () => {
 
   return (
     <div className="login">
+      <h1>Login</h1>
       <input
         className="inputBox"
         type="text"
