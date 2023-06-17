@@ -5,9 +5,10 @@ const pokemonSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  image:{
-    
-  }
+  image: {
+    type: String,
+    required: true,
+  },
   breed: {
     type: String,
     required: true,
@@ -16,7 +17,6 @@ const pokemonSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  
   health: {
     type: String,
     required: true,

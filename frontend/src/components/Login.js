@@ -13,7 +13,7 @@ const Login = () => {
   });
 
   const loginHandler = async () => {
-    let result = await fetch("http://localhost:5008/api/v1/login", {
+    let result = await fetch("http://localhost:5010/api/v1/login", {
       method: "post",
       body: JSON.stringify({ email, password }),
       headers: {

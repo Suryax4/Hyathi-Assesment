@@ -19,11 +19,14 @@ const Navbar = () => {
       {auth ? (
         <ul className="nav-ul">
           <li>
-            <Link to="/"> Adopted Pokemon </Link>
+            <Link to="/"> Available Pokemon </Link>
+          </li>
+          <li>
+            <Link to="/adopted"> Adopted Pokemon </Link>
           </li>
 
           <li>
-            <Link to="/update"> Feed Pokemon </Link>
+            <Link to="/"> Feed Pokemon </Link>
           </li>
 
           <li>

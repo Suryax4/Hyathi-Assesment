@@ -7,7 +7,7 @@ import Signup from "./components/Signup";
 import PrivateComponent from "./components/PrivateComponent";
 import PokemonList from "./components/PokemonList";
 
-import FeedPokemon from "./components/FeedPokemon";
+import AdoptedPokemon from "./components/AdoptedPokemon";
 
 import { Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer";
@@ -18,7 +18,7 @@ const App = () => {
       <Routes>
         <Route element={<PrivateComponent />}>
           <Route path="/" element={<PokemonList />}></Route>
-          <Route path="/update/:id" element={<FeedPokemon />}></Route>
+          <Route path="/adopted" element={<AdoptedPokemon />}></Route>
           <Route path="/logout" element={<h1>Logout Component</h1>}></Route>
         </Route>
 
