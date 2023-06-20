@@ -6,16 +6,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
-    const auth = localStorage.getItem("user");
+    let auth = sessionStorage.getItem("token");
     if (auth) {
-      navigate("/");
+     navigate("/");
     }
   });
 
   const loginHandler = async () => {
-    let result = await fetch("http://localhost:5010/api/v1/login", {
+    let result = await fetch("http://localhost:5010/login", {
       method: "post",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username:email, password }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -23,9 +23,10 @@ const Login = () => {
 
     result = await result.json();
     console.log(result);
-    if (result.success) {
-      localStorage.setItem("user", JSON.stringify(result));
-      navigate("/");
+    if (result.token) {
+      localStorage.setItem("user", email);
+      sessionStorage.setItem("token",result?.token)
+     navigate("/");
     } else {
       alert("Please Enter Corect Details");
     }
@@ -37,7 +38,7 @@ const Login = () => {
       <input
         className="inputBox"
         type="text"
-        placeholder="Enter Email"
+        placeholder="Enter Username"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />

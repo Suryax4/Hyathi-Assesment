@@ -6,6 +6,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
+    sessionStorage.clear();
     navigate("/signup");
   };
 
@@ -25,14 +26,12 @@ const Navbar = () => {
             <Link to="/adopted"> Adopted Pokemon </Link>
           </li>
 
-          <li>
-            <Link to="/"> Feed Pokemon </Link>
-          </li>
+          
 
           <li>
             <Link onClick={logout} to="/signup">
               {" "}
-              Logout ({JSON.parse(auth).data.name}){" "}
+              Logout ({auth}){" "}
             </Link>
           </li>
         </ul>

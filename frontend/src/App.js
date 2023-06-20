@@ -11,6 +11,7 @@ import AdoptedPokemon from "./components/AdoptedPokemon";
 
 import { Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer";
+import 'semantic-ui-css/semantic.min.css'
 const App = () => {
   return (
     <div>

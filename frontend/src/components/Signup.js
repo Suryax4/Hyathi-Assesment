@@ -7,18 +7,18 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const auth = localStorage.getItem("user");
-    if (auth) {
-      navigate("/");
-    }
-  });
+  // useEffect(() => {
+  //   const auth = localStorage.getItem("user");
+  //   if (auth) {
+  //     navigate("/login");
+  //   }
+  // });
 
   const collectData = async () => {
     console.warn(name, email, password);
-    let result = await fetch("http://localhost:5010/api/v1/register", {
+    let result = await fetch("http://localhost:5010/register", {
       method: "POST",
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ username:name, email, password }),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -27,10 +27,9 @@ const Signup = () => {
     result = await result.json();
     console.warn(result);
 
-    localStorage.setItem("user", JSON.stringify(result));
 
     if (result) {
-      navigate("/");
+      navigate("/login");
     }
   };
 

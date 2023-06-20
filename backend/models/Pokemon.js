@@ -1,26 +1,19 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const pokemonSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-    required: true,
-  },
-  breed: {
-    type: String,
-    required: true,
-  },
-  age: {
-    type: String,
-    required: true,
-  },
-  health: {
-    type: String,
-    required: true,
+const PokemonSchema = new Schema({
+  name: String,
+  image: String ,
+  breed: String,
+  age: Number,
+  health: Number,
+  adoptedBy: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    default: null,
   },
 });
 
-module.exports = mongoose.model("pokemons", pokemonSchema);
+const Pokemon = mongoose.model("Pokemon", PokemonSchema);
+
+module.exports = Pokemon;
