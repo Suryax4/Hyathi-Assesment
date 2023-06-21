@@ -65,12 +65,12 @@ async function initializePokemon(req, res) {
 }
 
 async function registerUser(req, res) {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
 
   try {
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      return res.status(400).json({ message: "Username already exists" });
+      return res.status(240).json({ message: "Username already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -78,10 +78,11 @@ async function registerUser(req, res) {
     const user = new User({
       username,
       password: hashedPassword,
+      email,
     });
     await user.save();
 
-    res.json({ message: "User registered successfully" });
+    res.status(220).json({ message: "User registered successfully" });
   } catch (error) {
     res.status(500).json({ message: "Failed to register user" });
   }
@@ -163,10 +164,15 @@ async function adoptPokemon(req, res) {
     user.adoptedPokemon.push(pokemon.name);
     await user.save();
 
-    res.json({ message: "Pokemon adopted successfully" ,"list":pokemon.name});
+    res.status(212).json({
+      message: "Pokemon adopted successfully",
+      list: pokemon.name,
+    });
   } catch (error) {
     res.status(500).json({ message: "Failed to adopt Pokemon" });
   }
+
+  //console.log(res);
 }
 
 async function getAdoptedPokemon(req, res) {
@@ -189,15 +195,29 @@ async function getAdoptedPokemon(req, res) {
 
     const array2 = [];
 
-    array1.forEach(async (val,i) => {
-      let temparr ="";
-      temparr= (await Pokemon.find({ name: val }));
-      array2.push(...temparr)
+    array1.forEach(async (val, i) => {
+      let temparr = "";
+      temparr = await Pokemon.find({ name: val });
+      array2.push(...temparr);
     });
+    // console.log(array2, "array2");
 
     setTimeout(() => {
+      const sortedArray = array2?.sort((a, b) => {
+        const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+        const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+
+        // names must be equal
+        return 0;
+      });
       res.json({
-        list:array2,
+        list: sortedArray,
       });
     }, 500);
   } catch (error) {
@@ -234,14 +254,14 @@ async function feedPokemon(req, res) {
     if (pokemon.health > 100) {
       pokemon.health = 100;
       await pokemon.save();
-      res.json({ message: "Pokemon fully fed", data: pokemon });
+      res.status(240).json({ message: "Pokemon fully fed", data: pokemon });
     } else {
       await pokemon.save();
-      res.json({ message: "Pokemon fed successfully" });
+      res.status(260).json({ message: "Pokemon fed successfully" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Failed to feed Pokemon" });
-  }
+    res.status(500).json({ message: "Failed to feed Pokemon" });
+  }
 }
 
 module.exports = {

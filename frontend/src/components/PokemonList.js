@@ -1,48 +1,57 @@
 import React, { useEffect, useState } from "react";
-import ModalExampleBasic from "./utility/modal-ui";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // import { Link } from "react-router-dom";
 const PokemonList = () => {
   const [pokemons, setPokemons] = useState([]);
-  const [modalTrigger,setModalTrigger] = useState(false)
 
   useEffect(() => {
     getPokemons();
-  },[]);
+  }, []);
+
+  const notify = (name) => toast(`${name} Already Adopted`);
+  const adopted = (name) => toast(`${name} Adopted Successfully`);
 
   const getPokemons = async () => {
     let myHeaders = new Headers();
-    let token = sessionStorage.getItem("token")
-    myHeaders.append("Authorization",`Bearer ${token}`)
-    let reqOptions ={
-      method:"GET",
-      headers:myHeaders
-    }
-    let result = await fetch("http://localhost:5010/pokemon",reqOptions);
+    let token = sessionStorage.getItem("token");
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    let reqOptions = {
+      method: "GET",
+      headers: myHeaders,
+    };
+    let result = await fetch("http://localhost:5010/pokemon", reqOptions);
     result = await result.json();
     setPokemons(result);
   };
 
-  
-  const adoptPokemon = async (id) => {
+  const adoptPokemon = async (id, name) => {
     let myHeaders = new Headers();
-    let token = sessionStorage.getItem("token")
+    let token = sessionStorage.getItem("token");
 
-    myHeaders.append("Authorization",`Bearer ${token}`)
-    const reqBody ={
-      method:"POST",
-      headers:myHeaders
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    const reqBody = {
+      method: "POST",
+      headers: myHeaders,
+    };
+
+    let res = await fetch(`http://localhost:5010/pokemon/${id}/adopt`, reqBody);
+
+    if (res.status === 212) {
+      adopted(name);
     }
 
-    let res = await fetch(`http://localhost:5010/pokemon/${id}/adopt`,reqBody);
-
-     res.status === 236 ?setModalTrigger(true):setModalTrigger(false);
-
-  }
+    if (res.status === 236) {
+      notify(name);
+    }
+  };
 
   return (
     <div className="product-list">
-      <h3>Pokemon List</h3>
-      <ModalExampleBasic value={modalTrigger} />
+      <h1>Pokemon List</h1>
+
+      <ToastContainer />
       <ul>
         <li>S No.</li>
         <li>Name</li>
@@ -64,8 +73,14 @@ const PokemonList = () => {
             <li>{pokemon.breed}</li>
             <li>{pokemon.age}</li>
             <li>{pokemon.health}</li>
-            <li><button onClick={()=>adoptPokemon(pokemon._id)}>Adopt</button></li>
-
+            <li>
+              <button
+                className="adoptButton"
+                onClick={() => adoptPokemon(pokemon._id, pokemon.name)}
+              >
+                Adopt
+              </button>
+            </li>
           </ul>
         );
       })}

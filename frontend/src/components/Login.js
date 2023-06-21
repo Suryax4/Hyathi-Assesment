@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -8,32 +10,44 @@ const Login = () => {
   useEffect(() => {
     let auth = sessionStorage.getItem("token");
     if (auth) {
-     navigate("/");
+      navigate("/");
     }
   });
+
+  const notify = () => toast(`Login Successful redirecting to Home Page`);
+  const notify2 = () => {
+    toast(`Please Enter Correct Details`);
+  };
 
   const loginHandler = async () => {
     let result = await fetch("http://localhost:5010/login", {
       method: "post",
-      body: JSON.stringify({ username:email, password }),
+      body: JSON.stringify({ username: email, password }),
       headers: {
         "Content-Type": "application/json",
       },
     });
 
+    if (result) {
+      notify();
+    }
+
     result = await result.json();
     console.log(result);
     if (result.token) {
       localStorage.setItem("user", email);
-      sessionStorage.setItem("token",result?.token)
-     navigate("/");
+      sessionStorage.setItem("token", result?.token);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } else {
-      alert("Please Enter Corect Details");
+      notify2();
     }
   };
 
   return (
     <div className="login">
+      <ToastContainer autoClose={2000} />
       <h1>Login</h1>
       <input
         className="inputBox"

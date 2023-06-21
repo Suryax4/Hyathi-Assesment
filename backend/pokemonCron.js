@@ -21,7 +21,7 @@ function initializeCronJob() {
       await Promise.all(
         unattendedPokemon.map(async (pokemonBreed) => {
           const pokemon = await Pokemon.findOne({ name: pokemonBreed });
-          if (pokemon && pokemon.health> 10) {
+          if (pokemon && pokemon.health>= 10) {
             pokemon.health -= 10;
             await pokemon.save();
           }
