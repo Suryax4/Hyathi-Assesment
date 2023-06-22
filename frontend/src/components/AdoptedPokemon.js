@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import { Link } from "react-router-dom";
 const AdoptedPokemon = () => {
-  const [pokemons, setPokemons] = useState([]);
+  const [pokemons, setPokemons] = useState(null);
 
   useEffect(() => {
     getPokemons();
@@ -66,7 +66,7 @@ const AdoptedPokemon = () => {
   const nullData = () => {
     return (
       <div>
-        <h1>Please Adopt Pokemon</h1>
+        <h1>Please Adopt Pokemon to see them</h1>
       </div>
     );
   };
@@ -74,7 +74,7 @@ const AdoptedPokemon = () => {
   return (
     <div className="product-list">
       <ToastContainer />
-      {pokemons?.length === 0 ? (
+      {!!pokemons && pokemons?.length === 0 ? (
         nullData()
       ) : (
         <div>
@@ -89,7 +89,7 @@ const AdoptedPokemon = () => {
             <li>Operation</li>
           </ul>
 
-          {pokemons.map((pokemon, index) => {
+          {pokemons?.map((pokemon, index) => {
             return (
               <ul key={pokemon._id}>
                 <li>{index + 1}</li>

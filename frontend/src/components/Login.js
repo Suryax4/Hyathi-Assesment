@@ -14,7 +14,9 @@ const Login = () => {
     }
   });
 
-  const notify = () => toast(`Login Successful redirecting to Home Page`);
+  const notify = () =>
+    toast(`Login Successful ..
+  ...redirecting to Home Page`);
   const notify2 = () => {
     toast(`Please Enter Correct Details`);
   };
@@ -28,15 +30,12 @@ const Login = () => {
       },
     });
 
-    if (result) {
-      notify();
-    }
-
     result = await result.json();
     console.log(result);
     if (result.token) {
       localStorage.setItem("user", email);
       sessionStorage.setItem("token", result?.token);
+      notify();
       setTimeout(() => {
         navigate("/");
       }, 2000);

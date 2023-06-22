@@ -73,6 +73,12 @@ async function registerUser(req, res) {
       return res.status(240).json({ message: "Username already exists" });
     }
 
+    if (password?.length < 6) {
+      return res
+        .status(401)
+        .json({ message: "Please enter password of length greater than 6" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new User({
@@ -248,7 +254,7 @@ async function feedPokemon(req, res) {
 
     // Update the lastFed timestamp for the Pokemon
     pokemon.lastFed = new Date();
-    console.log(pokemon.health);
+
     pokemon.health = parseInt(pokemon.health) + 10;
 
     if (pokemon.health > 100) {

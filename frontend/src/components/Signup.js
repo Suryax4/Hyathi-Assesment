@@ -16,35 +16,77 @@ const Signup = () => {
     }
   });
 
-  const notify = (name) => toast(`${name} Already Registered Please Login`);
+  const notify = (name) =>
+    toast(`${name} Already Registered... 
+  Please Login`);
   const notify2 = () => {
     toast(`Registration Succesfull`);
   };
+  const passwordToast = () => {
+    toast("Password less than 6 characters");
+  };
+  const emailToast = () => {
+    toast("Please enter valid email address");
+  };
+  const userNameToast = () => {
+    toast("Please enter username");
+  };
+
+  function ValidateEmail(mail) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+      return true;
+    }
+    // alert("You have entered an invalid email address!")
+    return false;
+  }
+  const validationCheck = () => {
+    let count = 0;
+    if (password?.length < 6) {
+      passwordToast();
+      count++;
+    }
+    if (name?.length < 1) {
+      userNameToast();
+      count++;
+    }
+    if (!ValidateEmail(email)) {
+      emailToast();
+      count++;
+    }
+    return count;
+  };
 
   const collectData = async () => {
-    console.warn(name, email, password);
-    let result = await fetch("http://localhost:5010/register", {
-      method: "POST",
-      body: JSON.stringify({ username: name, email, password }),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    });
-
-    if (result.status === 240) {
-      notify(name);
+    console.log(name, email, password);
+    if (validationCheck() > 0) {
+      return;
     }
-    if (result.status === 220) {
-      notify2();
-    }
-    result = await result.json();
-    console.warn(result);
+    try {
+      let result = await fetch("http://localhost:5010/register", {
+        method: "POST",
+        body: JSON.stringify({ username: name, email, password }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
 
-    if (result) {
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      if (result.status === 240) {
+        notify(name);
+      }
+      if (result.status === 220) {
+        notify2();
+      }
+      result = await result.json();
+      console.warn(result);
+
+      if (result) {
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      }
+    } catch (error) {
+      console.log("Error occurred in Sign up");
     }
   };
 

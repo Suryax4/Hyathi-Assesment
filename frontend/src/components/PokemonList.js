@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Bars } from "react-loader-spinner";
 
 // import { Link } from "react-router-dom";
 const PokemonList = () => {
@@ -47,43 +48,67 @@ const PokemonList = () => {
     }
   };
 
+  const nullData = () => {
+    return (
+      <div className="center">
+        <Bars
+          height="80"
+          width="80"
+          color="skyblue"
+          ariaLabel="bars-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          align="center"
+        />
+      </div>
+    );
+  };
+
   return (
     <div className="product-list">
-      <h1>Pokemon List</h1>
-
       <ToastContainer />
-      <ul>
-        <li>S No.</li>
-        <li>Name</li>
-        <li>Image</li>
-        <li>Breed</li>
-        <li>Age</li>
-        <li>Health</li>
-        <li>Operation</li>
-      </ul>
 
-      {pokemons.map((pokemon, index) => {
-        return (
-          <ul key={pokemon._id}>
-            <li>{index + 1}</li>
-            <li>{pokemon.name}</li>
-            <li>
-              <img src={pokemon.image} alt="" srcset="" />
-            </li>
-            <li>{pokemon.breed}</li>
-            <li>{pokemon.age}</li>
-            <li>{pokemon.health}</li>
-            <li>
-              <button
-                className="adoptButton"
-                onClick={() => adoptPokemon(pokemon._id, pokemon.name)}
-              >
-                Adopt
-              </button>
-            </li>
+      {pokemons?.length === 0 ? (
+        nullData()
+      ) : (
+        <div>
+          <h1>Pokemon List</h1>
+
+          <ul>
+            <li>S No.</li>
+            <li>Name</li>
+            <li>Image</li>
+            <li>Breed</li>
+            <li>Age</li>
+            <li>Health</li>
+            <li>Operation</li>
           </ul>
-        );
-      })}
+
+          {pokemons.map((pokemon, index) => {
+            return (
+              <ul key={pokemon._id}>
+                <li>{index + 1}</li>
+                <li>{pokemon.name}</li>
+                <li>
+                  <img src={pokemon.image} alt="" srcset="" />
+                </li>
+                <li>{pokemon.breed}</li>
+                <li>{pokemon.age}</li>
+                <li>{pokemon.health}</li>
+                <li>
+                  <button
+                    className="adoptButton"
+                    onClick={() => adoptPokemon(pokemon._id, pokemon.name)}
+                  >
+                    Adopt
+                  </button>
+                </li>
+              </ul>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

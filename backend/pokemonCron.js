@@ -3,11 +3,11 @@ const Pokemon = require("./models/Pokemon");
 const User = require("./models/User");
 
 function initializeCronJob() {
-  const decreaseHealthCron = cron.schedule("*/1 * * * *", async () => {
+  const decreaseHealthCron = cron.schedule("*/10 * * * *", async () => {
     try {
-      const thresholdTime = new Date(Date.now() - 1 * 60 * 1000); // 1 minute ago
+      const thresholdTime = new Date(Date.now() - 10 * 60 * 1000); // 10 minute ago
 
-      // Find all users who haven't fed their Pokemon for 1 minute
+      // Find all users who haven't fed their Pokemon for 10 minute
       const usersToUpdate = await User.find({
         lastFed: { $lt: thresholdTime },
       });
@@ -21,7 +21,7 @@ function initializeCronJob() {
       await Promise.all(
         unattendedPokemon.map(async (pokemonBreed) => {
           const pokemon = await Pokemon.findOne({ name: pokemonBreed });
-          if (pokemon && pokemon.health>= 10) {
+          if (pokemon && pokemon.health >= 10) {
             pokemon.health -= 10;
             await pokemon.save();
           }
@@ -37,4 +37,4 @@ function initializeCronJob() {
   decreaseHealthCron.start();
 }
 
-module.exports = { initializeCronJob };
+module.exports = { initializeCronJob };
