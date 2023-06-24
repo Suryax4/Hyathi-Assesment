@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-const JWT_SECRET = "secret";
+const JWT_SECRET = process.env.SECRET_KEY;
 const JWT_EXPIRATION = "1d"; // Token expires in 1 day
 
 function authenticate(req, res, next) {

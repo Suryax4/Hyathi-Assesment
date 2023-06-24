@@ -5,7 +5,7 @@ var cors = require("cors");
 var { initializeCronJob } = require("./pokemonCron");
 
 require("dotenv").config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5010;
 
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
