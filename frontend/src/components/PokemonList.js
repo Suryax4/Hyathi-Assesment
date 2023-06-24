@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Bars } from "react-loader-spinner";
+import { BASE_URL } from "../helper";
 
 // import { Link } from "react-router-dom";
 const PokemonList = () => {
@@ -22,7 +23,7 @@ const PokemonList = () => {
       method: "GET",
       headers: myHeaders,
     };
-    let result = await fetch("http://localhost:5010/pokemon", reqOptions);
+    let result = await fetch(`${BASE_URL}/pokemon`, reqOptions);
     result = await result.json();
     setPokemons(result);
   };
@@ -37,7 +38,7 @@ const PokemonList = () => {
       headers: myHeaders,
     };
 
-    let res = await fetch(`http://localhost:5010/pokemon/${id}/adopt`, reqBody);
+    let res = await fetch(`${BASE_URL}/pokemon/${id}/adopt`, reqBody);
 
     if (res.status === 212) {
       adopted(name);

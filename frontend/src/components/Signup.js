@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BASE_URL } from "../helper";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -16,9 +17,7 @@ const Signup = () => {
     }
   });
 
-  const notify = (name) =>
-    toast(`${name} Already Registered... 
-  Please Login`);
+  const notify = (name) => toast(`${name} Already Registered...Please Login`);
   const notify2 = () => {
     toast(`Registration Succesfull`);
   };
@@ -62,8 +61,8 @@ const Signup = () => {
       return;
     }
     try {
-      let result = await fetch("http://localhost:5010/register", {
-        method: "POST",
+      let result = await fetch(`${BASE_URL}/register`, {
+        method: "post",
         body: JSON.stringify({ username: name, email, password }),
         headers: {
           "Content-Type": "application/json",

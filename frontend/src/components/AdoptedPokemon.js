@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BASE_URL } from "../helper";
+
 // import { Link } from "react-router-dom";
 const AdoptedPokemon = () => {
   const [pokemons, setPokemons] = useState(null);
@@ -20,10 +22,7 @@ const AdoptedPokemon = () => {
       method: "GET",
       headers: myHeaders,
     };
-    let result = await fetch(
-      "http://localhost:5010/adoptedpokemon",
-      reqOptions
-    );
+    let result = await fetch(`${BASE_URL}/adoptedpokemon`, reqOptions);
     result = await result.json();
     setPokemons(result.list);
   };
@@ -45,7 +44,7 @@ const AdoptedPokemon = () => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:5010/pokemon/feed", requestOptions)
+    fetch(`${BASE_URL}/pokemon/feed`, requestOptions)
       .then((response) => {
         response.json();
         if (response.status === 260) {

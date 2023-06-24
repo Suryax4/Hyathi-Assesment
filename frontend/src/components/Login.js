@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BASE_URL } from "../helper";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +23,7 @@ const Login = () => {
   };
 
   const loginHandler = async () => {
-    let result = await fetch("http://localhost:5010/login", {
+    let result = await fetch(`${BASE_URL}/login`, {
       method: "post",
       body: JSON.stringify({ username: email, password }),
       headers: {
