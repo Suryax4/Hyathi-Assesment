@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const auth = localStorage.getItem("user");
+  const auth2 = sessionStorage.getItem("token");
   const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
@@ -17,7 +18,7 @@ const Navbar = () => {
         className="logo"
         alt="logo"
       />
-      {auth ? (
+      {auth2 ? (
         <ul className="nav-ul">
           <li>
             <Link to="/"> Available Pokemon </Link>
@@ -25,8 +26,6 @@ const Navbar = () => {
           <li>
             <Link to="/adopted"> Adopted Pokemon </Link>
           </li>
-
-          
 
           <li>
             <Link onClick={logout} to="/signup">

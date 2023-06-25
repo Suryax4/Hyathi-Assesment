@@ -11,9 +11,9 @@ const Signup = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const auth = localStorage.getItem("user");
+    let auth = sessionStorage.getItem("token");
     if (auth) {
-      navigate("/login");
+      navigate("/");
     }
   });
 
