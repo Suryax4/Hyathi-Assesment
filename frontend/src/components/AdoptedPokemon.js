@@ -78,6 +78,10 @@ const AdoptedPokemon = () => {
       ) : (
         <div>
           <h1>Adopted Pokemon</h1>
+          <h3>
+            Feed the Pokemon as their Health will decrease at a regular interval
+            of 10 minutes
+          </h3>
           <ul>
             <li>S No.</li>
             <li>Name</li>
